@@ -12,18 +12,18 @@ client.on("ready", function() {
 });
 
 
-client.on('message', (msg) => {
-  if (msg.author.username != client.user.username && msg.author.discriminator != client.user.discriminator) {
-    var comm = msg.content.trim() + " ";
-    var comm_name = comm.slice(0, comm.indexOf(" "));
-    var messArr = comm.split(" ");
-    for (comm_count in comms.comms) {
-      var comm2 = prefix + comms.comms[comm_count].name;
-      if (comm2 == comm_name) {
-        comms.comms[comm_count].out(client, msg, messArr);
-      }
-    }
-  }
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	const { commandName } = interaction;
+
+	if (commandName === 'ping') {
+		await interaction.reply('Pong!');
+	} else if (commandName === 'server') {
+		await interaction.reply('Server info.');
+	} else if (commandName === 'user') {
+		await interaction.reply('User info.');
+	}
 });
 
 
