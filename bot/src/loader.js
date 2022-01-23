@@ -1,5 +1,5 @@
 const { readdirSync } = require('fs');
-const { Collection } = require('discord.js');
+
 
 const events = readdirSync('./events/').filter(file => file.endsWith('.js'));
 
