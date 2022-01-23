@@ -1,8 +1,9 @@
 const { Client, Intents} = require('discord.js');
 const fs = require('fs');
-const {token, prefix} = require('./config.json'); 
+const {token, prefix} = require('./config.json');
+const messageCreate = require('./events/messageCreate');
 
-const client = new Client({ intents: [
+ global.client = new Client({ intents: [
 	Intents.FLAGS.GUILDS,
 	Intents.FLAGS.GUILD_MEMBERS,
 	Intents.FLAGS.GUILD_MESSAGES,
@@ -14,20 +15,7 @@ client.on("ready", () => {
   });
 
 client.on('messageCreate', async (message) => {
-	 if (!message.content.startsWith(prefix)) return;
-	 if (message.content.startsWith(`${prefix}name_me`)) {
-		if (!client.application?.owner) return;
-			message.member.setNickname('psina');
-		 
-		
-
-	 	return;
-	}
-	if ( message.content === 'pes') {
-			 
-		message.channel.send("sam ti pes")
-	}
-    
+	messageCreate(client, message);
 })
 
 
