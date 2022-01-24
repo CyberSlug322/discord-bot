@@ -11,26 +11,36 @@ function getUsers() {
  function userFind(id) {
     const users = getUsers();
     for ( let i = 0; i < users.length; i++ ) {
-        console.log(id);
-        console.log(users[i].id);
         if (users[i].id === id) {
             return i;
         } 
     }
-    return false;
+    return null;
 }
 
-function writeUser(id, name=false, alias=false) {
-    if (userFind(id) === false) {
-        const users = createUser(id);
+function writeUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
+    const userPos = userFind(id);
+    if (userPos === null) {
+        const users = addNewUser(id, name, alias);
         fs.writeFileSync(pathToUsers, JSON.stringify(users));
+        return name || '' + ' ' + alias || '';
     } else {
-
+        const users = getUsers();
+        if (name) users[userPos].name = name;
+        if (alias) users[userPos].alias = alias;
+        fs.writeFileSync(pathToUsers, JSON.stringify(users));
+        console.log(users[userPos].name || '' + ' ' + users[userPos].alias || '')
+        return (users[userPos].name || '') + ' ' +  (users[userPos].alias || '');
     }
 }
 
-function createUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
+function addNewUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
     const users = getUsers();
     users.push({id, name, alias, points, refreshesRemain});
-    return users
+    return users;
+}
+
+function getUserName(id) {
+    if ( userFind(id) === null ) return null;
+    return [ ]
 }
