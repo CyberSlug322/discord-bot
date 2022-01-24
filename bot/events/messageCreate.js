@@ -1,14 +1,14 @@
 const {prefix} = require('../config.json');
 const names = require('../data/names.json');
 const points = require('../data/points.json');
-const {getUser} = require('../utils/userManager');
+const {getUsers,userFind,writeUser} = require('../utils/userManager');
 module.exports = (client, message) => {
     nameInputHandle(client, message);
    
     
 }
 function rollRarity(array) {
-    
+    writeUser("9999999999991");
     const roll = Math.floor(Math.random() * 100);
     const rolledRarity = roll < 68 ? "common" : roll < 90 ? "rare" : roll < 98 ? "epic" : "legendary";
     return array[rolledRarity][Math.floor(Math.random() * array[rolledRarity].length)];
