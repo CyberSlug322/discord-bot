@@ -2,7 +2,7 @@ const {prefix} = require('../config.json');
 const names = require('../data/names.json');
 const alias = require('../data/alias.json');
 const points = require('../data/points.json');
-const {getUsers,userFind,writeUser} = require('../utils/userManager');
+const {writeUser,changeUserPoints} = require('../utils/userManager');
 module.exports = (client, message) => {
     nameInputHandle(client, message);
    
@@ -18,8 +18,14 @@ function nameInputHandle(client, message) {
     if (message.author.bot || message.channel.type === 'dm') return;
     if (!message.content.startsWith(prefix)) return;
     if (message.content.startsWith(`${prefix}roll_name`)) {
-        const newName = rollRarity(names);
-		message.member.setNickname(writeUser(message.author.id, newName));
+        const [status, currentAmount] = changeUserPoints(message.author.id,-2);
+        if ( status ) {
+            const newName = rollRarity(names);
+		    message.member.setNickname(writeUser(message.author.id, newName));
+            message.reply(`Я, бот пес(БОТ ПЕС), отныне нарекаю тебя: ${newName}`);
+        } else {
+            message.reply(`У тебя не хватает поинтов, чтобы сделать ролл. Попробуй найти их где-нибудь, текущий остаток поинтов:${currentAmount}`)
+        }
 	 	return;
 	}
     if (message.content.startsWith(`${prefix}roll_alias`)) {

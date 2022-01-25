@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const pathToUsers = path.resolve(__dirname, '../data/users.json');
 
-module.exports = {getUsers,userFind,writeUser}
+module.exports = {getUsers,userFind,writeUser,changeUserPoints}
 
 function getUsers() {
     return JSON.parse(fs.readFileSync(pathToUsers, "utf8"));
@@ -40,7 +40,15 @@ function addNewUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
     return users;
 }
 
-function getUserName(id) {
-    if ( userFind(id) === null ) return null;
-    return [ ]
+function changeUserPoints(userId, amount) {
+    if ( userFind(userId) === null) writeUser(userId);
+    const userIndex = userFind(userId);
+    const users = getUsers();
+    if ( users[userIndex].points + amount < 0 ) {
+        return [false, users[userIndex].points];
+    } else {
+        users[userIndex].points += amount;
+        fs.writeFileSync(pathToUsers, JSON.stringify(users));
+        return [true, users[userIndex].points];
+    }
 }
