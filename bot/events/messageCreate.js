@@ -1,7 +1,6 @@
 const {prefix} = require('../config.json');
 const names = require('../data/names.json');
 const alias = require('../data/alias.json');
-const points = require('../data/points.json');
 const {writeUser,changeUserPoints} = require('../utils/userManager');
 module.exports = (client, message) => {
     nameInputHandle(client, message);
