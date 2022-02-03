@@ -14,5 +14,6 @@ module.exports = (client) => {
         client.on(file.split('.')[0], event.bind(null, client));
         delete require.cache[require.resolve(`../events/${file}`)];
     };
+    const test = 1;
 }
 
