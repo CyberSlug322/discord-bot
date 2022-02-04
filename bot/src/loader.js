@@ -15,6 +15,7 @@ module.exports = (client) => {
         delete require.cache[require.resolve(`../events/${file}`)];
     };
     const test2 = 'test change';
+    const test3 = 'test change5215';
     
 }
 
