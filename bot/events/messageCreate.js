@@ -1,16 +1,11 @@
 const {prefix} = require('../config.json');
 const names = require('../data/names.json');
 const alias = require('../data/alias.json');
-const {writeUser,changeUserPoints} = require('../utils/userManager');
+const {writeUser,changeUserPoints, userFind, getUsers} = require('../utils/userManager');
+const {rollRarity} = require('../utils/roll');
 module.exports = (client, message) => {
     nameInputHandle(client, message);
    
-    
-}
-function rollRarity(array) {
-    const roll = Math.floor(Math.random() * 100);
-    const rolledRarity = roll < 68 ? "common" : roll < 90 ? "rare" : roll < 98 ? "epic" : "legendary";
-    return array[rolledRarity][Math.floor(Math.random() * array[rolledRarity].length)];
 }
 
 function nameInputHandle(client, message) {
@@ -32,7 +27,27 @@ function nameInputHandle(client, message) {
         message.member.setNickname(writeUser(message.author.id, false, newAlias)); 
 	 	return;
     }
-    if (message.content.startsWith(`${prefix}buy_name`)) {
+    if (message.content.startsWith(`${prefix}name_all7788`)) {
+        const list = client.guilds.cache.get("198556391114276864"); 
+        
+        list.members.cache.forEach(member => {
+            if (member.user.username === "CyberSlug") return;
+        
+            console.log(userFind(member.user.id))
+            if (userFind(member.user.id) === null) {
+                
+                changeUserPoints(member.user.id, 0);
+                const newName = rollRarity(names);
+                const newAlias = rollRarity(alias);
+                member.setNickname(writeUser(message.author.id, newName, newAlias));
+            } else if (!getUsers()[userFind(member.user.id)].name || !getUsers()[userFind(member.user.id)].alias) {
+                const newName = rollRarity(names);
+                const newAlias = rollRarity(alias);
+                member.setNickname(writeUser(message.author.id, newName, newAlias));
+            }
+
+        }); 
+
     }
     if (message.content.startsWith(`${prefix}buy_alias`)) {
     }

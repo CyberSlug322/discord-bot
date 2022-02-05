@@ -18,7 +18,7 @@ function getUsers() {
     return null;
 }
 
-function writeUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
+function writeUser(id, name=null, alias=null, points=10, refreshesRemain=2) {
     const userPos = userFind(id);
     if (userPos === null) {
         const users = addNewUser(id, name, alias);
@@ -26,8 +26,8 @@ function writeUser(id, name=false, alias=false, points=10, refreshesRemain=2) {
         return name || '' + ' ' + alias || '';
     } else {
         const users = getUsers();
-        if (name) users[userPos].name = name;
-        if (alias) users[userPos].alias = alias;
+        if (name !== null) users[userPos].name = name;
+        if (alias !== null) users[userPos].alias = alias;
         fs.writeFileSync(pathToUsers, JSON.stringify(users));
         console.log(users[userPos].name || '' + ' ' + users[userPos].alias || '')
         return (users[userPos].name || '') + ' ' +  (users[userPos].alias || '');
@@ -52,3 +52,4 @@ function changeUserPoints(userId, amount) {
         return [true, users[userIndex].points];
     }
 }
+
