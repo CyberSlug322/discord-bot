@@ -47,7 +47,7 @@ function changeUserPoints(userId, amount) {
     if ( users[userIndex].points + amount < 0 ) {
         return [false, users[userIndex].points];
     } else {
-        users[userIndex].points += amount;
+        users[userIndex].points = Number(users[userIndex].points) + Number(amount);
         fs.writeFileSync(pathToUsers, JSON.stringify(users));
         return [true, users[userIndex].points];
     }

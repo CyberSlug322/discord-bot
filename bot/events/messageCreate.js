@@ -63,7 +63,7 @@ function nameInputHandle(client, message) {
         }); 
 
     }
-    if (message.content.startsWith(`!бот, ты`)) {
+    if (message.content.startsWith(`${prefix}бот, ты`)) {
         message.reply(`⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⡛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠛⠉⠁⠀⠀⠀⠀⠀⠀⠈⠒⠀⠀⠀⠈⠑⠂⠈⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠷⠤⣄⠈⠛⠦⣀⠀⠑⠂⠀⠀⠀⠀⠀⠐⠂⠀⠀⠀⠀⠀⠀⠙⠒⠤⣘⣯⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
@@ -95,6 +95,18 @@ function nameInputHandle(client, message) {
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣤⣼⣿⣿⣿⣿⣦⣤⣤⣤⣤⣤⣤⣤⣼⣿⣿⣷⣦⣤⣤⣤⣤⣤⣶⣿⣿⣷⣤⣤⣤⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿`)
     }
-    if (message.content.startsWith(`${prefix}get_roll_alias`)) {
+    if (message.content.startsWith(`${prefix}give_points`)) {
+        if (message.member.user.username !== "CyberSlug") {
+            message.reply('У вас недостаточно прав для этой команды');
+        } else {
+            const [id, amount] = message.content.split(' ')[1].split('_');
+            const [isChanged, currentAmount] = changeUserPoints(id, amount);
+            if ( isChanged ) {
+                message.reply(`Points successfuly added to user #${id} `);
+            } else {
+                message.reply(`oshibka`)
+            }
+            
+        }
     }
 }
