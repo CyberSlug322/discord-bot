@@ -1,7 +1,11 @@
-module.exports = {rollRarity}
+const {NamesDB} = require('./namesDB');
 
-function rollRarity(array) {
+module.exports = async function rollRarity(type) {
     const roll = Math.floor(Math.random() * 100);
     const rolledRarity = roll < 68 ? "common" : roll < 90 ? "rare" : roll < 98 ? "epic" : "legendary";
-    return array[rolledRarity][Math.floor(Math.random() * array[rolledRarity].length)];
+    const array = type === "name" ? await NamesDB.getNames(rolledRarity) : await NamesDB.getAliases(rolledRarity);
+    return array[Math.floor(Math.random() * array.length)];
+    
 }
+
+

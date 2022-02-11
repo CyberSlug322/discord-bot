@@ -3,6 +3,8 @@ const fs = require('fs');
 const {token, prefix} = require('./config.json');
 const loader = require('./src/loader');
 
+
+
  const client = new Client({ intents: [
 	Intents.FLAGS.GUILDS,
 	Intents.FLAGS.GUILD_MEMBERS,
@@ -10,10 +12,8 @@ const loader = require('./src/loader');
 	Intents.FLAGS.GUILD_VOICE_STATES,
 	Intents.FLAGS.GUILD_PRESENCES
 ] });
+
 loader(client);
-
-
-
 
 
 client.login(token); 
