@@ -1,69 +1,48 @@
 const {prefix} = require('../config.json');
-const names = require('../data/names.json');
-const alias = require('../data/alias.json');
-const {writeUser,changeUserPoints, userFind, getUsers} = require('../utils/userManager');
-const {rollRarity} = require('../utils/roll');
+const {UserManager} = require('../utils/userManager');
+const rollName = require('../messages/roll_name');
+const roll_alias = require('../messages/roll_alias');
+const rollRarity = require('../utils/roll');
+const submit = require('../messages/submit');
+
+const userManager = new UserManager;
+
 module.exports = (client, message) => {
     nameInputHandle(client, message);
    
 }
 
-function nameInputHandle(client, message) {
+async function nameInputHandle(client, message) {
+    const id = message.author.id;
+    message.react('🤔')
     if (message.author.bot || message.channel.type === 'dm') return;
     if (!message.content.startsWith(prefix)) return;
-    if (message.content.startsWith(`${prefix}roll_name`)) {
-        const [status, currentAmount] = changeUserPoints(message.author.id,-2);
-        if ( status ) {
-            const newName = rollRarity(names);
-            if (message.member.user.username === "CyberSlug") {
-                message.reply(`Твое новое имя: ${newName}, установи его сам`);
-                return;
-            }
-		    message.member.setNickname(writeUser(message.author.id, newName));
-            message.reply(`Я, бот пес(БОТ ПЕС), отныне нарекаю тебя: ${newName}`);
-        } else {
-            message.reply(`У тебя не хватает поинтов, чтобы сделать ролл. Попробуй найти их где-нибудь, текущий остаток поинтов:${currentAmount}`)
-        }
-	 	return;
-	}
-    if (message.content.startsWith(`${prefix}roll_alias`)) {
-        const [status, currentAmount] = changeUserPoints(message.author.id,-2);
-        if ( status ) {
-            const newAlias = rollRarity(alias);
-            if (message.member.user.username === "CyberSlug") {
-                message.reply(`Твой новый псевдоним: ${newAlias}, установи его сам`);
-                return;
-            }
-		    message.member.setNickname(writeUser(message.author.id, null, newAlias));
-            message.reply(`С этого момента твоим прозвищем будет: ${newAlias}!`);
-        } else {
-            message.reply(`У тебя не хватает поинтов, чтобы сделать ролл. Попробуй найти их где-нибудь, текущий остаток поинтов:${currentAmount}`)
-        }
-	 	return;
-    }
+    rollName(message, userManager);
+    roll_alias(message, userManager);
+    submit(message);
+    
     if (message.content.startsWith(`${prefix}name_all`)) {
-        if (!member.user.username === "CyberSlug") {
+        if (!message.member.user.username === "CyberSlug") {
             message.reply(`Чел, тебе не доступна эта команда`);
             return;
         }
         const list = client.guilds.cache.get("198556391114276864"); 
-        list.members.cache.forEach(member => {
+        list.members.cache.forEach(async (member) => {
+            const id = member.user.id;
             if (member.user.username === "CyberSlug") return;
-            if (userFind(member.user.id) === null) {   
-                changeUserPoints(member.user.id, 0);
-                const newName = rollRarity(names);
-                const newAlias = rollRarity(alias);
-                member.setNickname(writeUser(message.author.id, newName, newAlias));
-            } else if (!getUsers()[userFind(member.user.id)].name || !getUsers()[userFind(member.user.id)].alias) {
-                const newName = rollRarity(names);
-                const newAlias = rollRarity(alias);
-                member.setNickname(writeUser(message.author.id, newName, newAlias));
-            }
-
-        }); 
-
+            const user = await userManager.find(member.user.id)
+            if ( user === null) {                
+                const newName = await rollRarity("name");
+                const newAlias = await rollRarity("alias");
+                const newUser = await userManager.create({id, name:newName, alias: newAlias, points: 10});            
+                const fullName = await userManager.getFullName(newUser);
+                member.setNickname(fullName);
+                console.log("Изменен", fullName);
+                return;
+            } 
+        })
     }
-    if (message.content.startsWith(`!бот, ты`)) {
+    if (message.content.startsWith(`${prefix}бот, ты`)) {
         message.reply(`⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⡛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠛⠉⠁⠀⠀⠀⠀⠀⠀⠈⠒⠀⠀⠀⠈⠑⠂⠈⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠷⠤⣄⠈⠛⠦⣀⠀⠑⠂⠀⠀⠀⠀⠀⠐⠂⠀⠀⠀⠀⠀⠀⠙⠒⠤⣘⣯⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
@@ -95,6 +74,18 @@ function nameInputHandle(client, message) {
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣤⣼⣿⣿⣿⣿⣦⣤⣤⣤⣤⣤⣤⣤⣼⣿⣿⣷⣦⣤⣤⣤⣤⣤⣶⣿⣿⣷⣤⣤⣤⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿`)
     }
-    if (message.content.startsWith(`${prefix}get_roll_alias`)) {
+    if (message.content.startsWith(`${prefix}give_points`)) {
+        if (message.member.user.username !== "CyberSlug") {
+            message.reply('У вас недостаточно прав для этой команды');
+        } else {
+            const [id, amount] = message.content.split(' ')[1].split('_');
+            const [isChanged, currentAmount] = changeUserPoints(id, amount);
+            if ( isChanged ) {
+                message.reply(`Points successfuly added to user #${id} `);
+            } else {
+                message.reply(`oshibka`)
+            }
+            
+        }
     }
 }

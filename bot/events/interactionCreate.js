@@ -10,7 +10,6 @@ module.exports = async (client, interaction) => {
 	} else if (commandName === 'user') {
 		await interaction.reply('User info.');
 	} else if (commandName === 'name_me') {
-		console.log('testing')
 		interaction.member.setNickname(interaction.content.replace('changeNick ', ''));
 	}
 }
