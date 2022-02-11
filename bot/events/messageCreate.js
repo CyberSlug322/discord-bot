@@ -3,6 +3,7 @@ const {UserManager} = require('../utils/userManager');
 const rollName = require('../messages/roll_name');
 const roll_alias = require('../messages/roll_alias');
 const rollRarity = require('../utils/roll');
+const submit = require('../messages/submit');
 
 const userManager = new UserManager;
 
@@ -18,6 +19,7 @@ async function nameInputHandle(client, message) {
     if (!message.content.startsWith(prefix)) return;
     rollName(message, userManager);
     roll_alias(message, userManager);
+    submit(message);
     
     if (message.content.startsWith(`${prefix}name_all`)) {
         if (!message.member.user.username === "CyberSlug") {

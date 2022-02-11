@@ -3,10 +3,10 @@ const mongoose = require('mongoose') ;
 const {MONGO_URL} = require('../config.json')
 
 const userSchema = new mongoose.Schema({
-    id: Number,
-    name: String,
-    alias: String,
-    points: Number
+  id: Number,
+  name: String,
+  alias: String,
+  points: Number
   }, { versionKey: false }); 
 
 const nameSchema = new mongoose.Schema({
@@ -23,9 +23,14 @@ const aliasSchema = new mongoose.Schema({
   legendary: Array
 }, { versionKey: false });
 
+const submissionsSchema = new mongoose.Schema({
+  list: Array
+}, {versionKey: false});
+
 const User = mongoose.model('User', userSchema );
 const Names = mongoose.model('Names', nameSchema );
 const Aliases = mongoose.model('Aliases', aliasSchema );
+const Submissions = mongoose.model("Submissions", submissionsSchema);
 
 mongoose.connect(MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
@@ -33,7 +38,7 @@ db.once('open', () => {
   console.log('mongoDB connected')
 })
 
-module.exports = {User, Names, Aliases}
+module.exports = {User, Names, Aliases, Submissions}
 
 
   
