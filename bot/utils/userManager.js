@@ -18,8 +18,10 @@ class UserManager {
     }
 
     async changePoints(id, amount) {
+        console.log(amount);
         const user = await User.findOne({id});
-        user.id = user.id + amount;
+        console.log(user.id);
+        user.points = user.points + amount;
         user.save();
     }
 
@@ -44,7 +46,7 @@ class UserManager {
 
     async getPoints(id) {
         const user = await User.findOne({id});
-        return user && user.points;
+        return user?.points;
     }
 
     async getFullName(user) {
