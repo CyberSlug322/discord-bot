@@ -23,7 +23,7 @@ async function nameInputHandle(client, message) {
     
     if (message.content.startsWith(`${prefix}name_all`)) {
         if (!message.member.user.username === "CyberSlug") {
-            message.reply(`Чел, тебе не доступна эта команда`);
+            message.reply(`Эта команда не доступна `);
             return;
         }
         const list = client.guilds.cache.get("198556391114276864"); 
@@ -31,13 +31,8 @@ async function nameInputHandle(client, message) {
             const id = member.user.id;
             if (member.user.username === "CyberSlug") return;
             const user = await userManager.find(member.user.id)
-            if ( user === null) {                
-                const newName = await rollRarity("name");
-                const newAlias = await rollRarity("alias");
-                const newUser = await userManager.create({id, name:newName, alias: newAlias, points: 10});            
-                const fullName = await userManager.getFullName(newUser);
-                member.setNickname(fullName);
-                console.log("Изменен", fullName);
+            if ( user === null) { 
+                await userManager.create(member, id);               
                 return;
             } 
         })
