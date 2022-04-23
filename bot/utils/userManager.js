@@ -10,9 +10,9 @@ class UserManager {
         const newName = await roll("name");
         const newAlias = await roll("alias");               
         const user = new User({id, name:newName, alias: newAlias, points: 10});
+        await user.save();
         const fullName = await this.getFullName(user);
         await member.setNickname(fullName);
-        await user.save();
     }
 
     async changePoints(id, amount) {
@@ -47,8 +47,7 @@ class UserManager {
         return user ? user?.points : false;
     }
 
-    async getFullName(id) {
-        const user = await this.find(id);
+    async getFullName(user) {
         const name = user.name || '';
         const alias = user.alias || '';
         return name + ' ' + alias;

@@ -14,8 +14,8 @@ module.exports = async function nameAll (client, userManager) {
             const name = await roll("name");
             const alias = await roll("alias");
             await userManager.changeAlias(id, alias);
-            await userManager.changeName(id, name);
-            const fullName = userManager.getFullName(id);
+            const newUser = await userManager.changeName(id, name);
+            const fullName = userManager.getFullName(newUser);
             await member.setNickname(fullName);
         })             
     

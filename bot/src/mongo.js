@@ -16,6 +16,16 @@ const nameSchema = new mongoose.Schema({
   legendary: Array
 }, { versionKey: false });
 
+const newNameSchema = new mongoose.Schema({
+  all_fit: Array,
+  he_names: Array,
+  he_adjectives: Array,
+  neutral_names: Array,
+  neutral_adjectives: Array,
+  she_names: Array,
+  she_adjectives: Array
+}, { versionKey: false });
+
 const aliasSchema = new mongoose.Schema({
   common: Array,
   rare: Array,
@@ -28,9 +38,10 @@ const submissionsSchema = new mongoose.Schema({
 }, {versionKey: false});
 
 const User = mongoose.model('User', userSchema );
-const Names = mongoose.model('Names', nameSchema );
-const Aliases = mongoose.model('Aliases', aliasSchema );
+//const Names = mongoose.model('Names', nameSchema );
+//const Aliases = mongoose.model('Aliases', aliasSchema );
 const Submissions = mongoose.model("Submissions", submissionsSchema);
+const NewNames = mongoose.model('NewNames', newNameSchema );
 
 mongoose.connect(MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
@@ -38,7 +49,10 @@ db.once('open', () => {
   console.log('mongoDB connected')
 })
 
-module.exports = {User, Names, Aliases, Submissions}
+
+
+
+module.exports = {User, Submissions, NewNames}
 
 
   

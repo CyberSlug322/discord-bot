@@ -5,6 +5,7 @@ const rollAlias = require('../messages/roll_alias');
 const nameAll = require('../messages/name_all');
 const submit = require('../messages/submit');
 
+
 const userManager = new UserManager;
 
 module.exports = (client, message) => {
@@ -29,10 +30,8 @@ async function nameInputHandle(client, message) {
         
     }
     submit(message);
-
-    
    
-        
+     
         
     
     if (message.content.startsWith(`${prefix}бот, ты`)) {

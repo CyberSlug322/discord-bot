@@ -16,8 +16,9 @@ module.exports = async function rollName(message, userManager) {
         }
         if ( userPoints >= 2 ) {
             await userManager.changePoints(id, -2);
-            const newName = await roll("name");      
-            const fullName = await userManager.getFullName(id);
+            const newName = await roll("name");   
+            const user = await userManager.changeName(id ,newName);  
+            const fullName = await userManager.getFullName(user);
 		    await message.member.setNickname(fullName);
             message.reply(`Я, бот пес(БОТ ПЕС), отныне нарекаю тебя: ${newName}`);
         } else {

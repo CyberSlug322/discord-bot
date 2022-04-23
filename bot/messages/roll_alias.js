@@ -17,7 +17,8 @@ module.exports = async function rollAlias (message, userManager) {
         if ( userPoints >= 2 ) {
             await userManager.changePoints(id, -2);
             const newAlias = await roll("alias");
-            const fullName = await userManager.getFullName(id);
+            const user = await userManager.changeAlias(id ,newAlias);
+            const fullName = await userManager.getFullName(user);
 		    await message.member.setNickname(fullName);
             message.reply(`С этого момента твоим прозвищем будет: ${newAlias}!`);
         } else {

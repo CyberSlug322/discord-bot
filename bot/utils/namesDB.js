@@ -1,4 +1,4 @@
-const {Names, Aliases} = require('../src/mongo');
+const {NewNames} = require('../src/mongo');
 
 
   class NamesDB {
@@ -7,14 +7,14 @@ const {Names, Aliases} = require('../src/mongo');
 
     }
 
-    static async getNames(rarity) {  
-        const names = await Names.find({}); // Не правильно достает, надо переделать
-        return names[0][rarity]
+    static async getNames() {  
+        const names = await NewNames.find({}); // Не правильно достает, надо переделать
+        return names[0][0]
     }
 
-    static async getAliases(rarity) {
-        const aliases = await Aliases.find({});
-        return aliases[0][rarity];
+    static async getAliases() {
+        const aliases = await NewNames.find({});
+        return aliases[0][0];
     }
 
 
