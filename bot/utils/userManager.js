@@ -1,9 +1,5 @@
-const path = require('path');
-const fs = require('fs');
-const pathToUsers = path.resolve(__dirname, '../data/users.json');
 const {User} = require('../src/mongo')
-
-
+const rollRarity = require('./roll');
 
 class UserManager {
 
@@ -11,10 +7,13 @@ class UserManager {
 
     }
 
-    async create(obj) {
-        const user = new User(obj);
-        const result = await user.save();
-        return result;
+    async create(member, id) {
+        const newName = await rollRarity("name");
+        const newAlias = await rollRarity("alias");                
+        const user = new User({id, name:newName, alias: newAlias, points: 10});
+        const fullName = await this.getFullName(user);
+        await member.setNickname(fullName);
+        user.save();
     }
 
     async changePoints(id, amount) {
