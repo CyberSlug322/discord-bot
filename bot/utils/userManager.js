@@ -1,6 +1,5 @@
 const {User} = require('../src/mongo')
-const rollRarity = require('./roll');
-
+const roll = require('./roll');
 class UserManager {
 
     constructor() {
@@ -8,12 +7,12 @@ class UserManager {
     }
 
     async create(member, id) {
-        const newName = await rollRarity("name");
-        const newAlias = await rollRarity("alias");                
+        const newName = await roll("name");
+        const newAlias = await roll("alias");               
         const user = new User({id, name:newName, alias: newAlias, points: 10});
         const fullName = await this.getFullName(user);
         await member.setNickname(fullName);
-        user.save();
+        await user.save();
     }
 
     async changePoints(id, amount) {
@@ -45,10 +44,11 @@ class UserManager {
 
     async getPoints(id) {
         const user = await User.findOne({id});
-        return user?.points;
+        return user ? user?.points : false;
     }
 
-    async getFullName(user) {
+    async getFullName(id) {
+        const user = await this.find(id);
         const name = user.name || '';
         const alias = user.alias || '';
         return name + ' ' + alias;
