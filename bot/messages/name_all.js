@@ -11,12 +11,12 @@ module.exports = async function nameAll (client, userManager) {
                 await userManager.create(member, id);               
                 return;
             } 
-            const name = await roll("name");
-            const alias = await roll("alias");
-            await userManager.changeAlias(id, alias);
+            const name = await roll();
+            // const alias = await roll("alias");
+            //await userManager.changeAlias(id, alias);
             const newUser = await userManager.changeName(id, name);
-            const fullName = userManager.getFullName(newUser);
-            await member.setNickname(fullName);
+            //const fullName = userManager.getFullName(newUser);
+            await member.setNickname(`${name[0]} ${name[1]}`);
         })             
     
 }

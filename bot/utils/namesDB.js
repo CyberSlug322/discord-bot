@@ -7,9 +7,9 @@ const {NewNames} = require('../src/mongo');
 
     }
 
-    static async getNames() {  
+    static async getAllNames() {  
         const names = await NewNames.find({}); // Не правильно достает, надо переделать
-        return names[0][0]
+        return names[0]
     }
 
     static async getAliases() {

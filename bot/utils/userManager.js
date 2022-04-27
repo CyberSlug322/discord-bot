@@ -1,5 +1,5 @@
 const {User} = require('../src/mongo')
-const roll = require('./roll');
+const {roll} = require('./roll');
 class UserManager {
 
     constructor() {
@@ -7,11 +7,11 @@ class UserManager {
     }
 
     async create(member, id) {
-        const newName = await roll("name");
-        const newAlias = await roll("alias");               
-        const user = new User({id, name:newName, alias: newAlias, points: 10});
+        const newName = await roll();               
+        const user = new User({id, name:newName[0], alias: newName[1], points: 10});
         await user.save();
-        const fullName = await this.getFullName(user);
+        // const fullName = await this.getFullName(user);
+        const fullName = `${newName[0]} ${newName[1]}`;
         await member.setNickname(fullName);
     }
 
@@ -24,9 +24,11 @@ class UserManager {
     }
 
     async changeName(id, name) {
+        const newName = name.split(' ');
         const user = await User.findOne({id});
-        user.name = name;
+        user.name = newName[0];
         user.save();
+        await changeAlias(id, newName[1]);
         return user;
     }
 
