@@ -23,21 +23,21 @@ class UserManager {
         user.save();
     }
 
-    async changeName(id, name) {
-        const newName = name.split(' ');
-        const user = await User.findOne({id});
-        user.name = newName[0];
-        user.save();
-        await changeAlias(id, newName[1]);
-        return user;
-    }
-
     async changeAlias(id, alias) {
         const user = await User.findOne({id});
         user.alias = alias;
         user.save();
         return user;
     }
+
+    async changeName(id, name) {
+        const user = await User.findOne({id});
+        user.name = name[0];
+        user.save();
+        await this.changeAlias(id, name[1]);
+        return user;
+    }
+ 
 
     async find(id) {
         const user = await User.findOne({id});
