@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /bot/config.json
+/names.json
 # production
 /build
 

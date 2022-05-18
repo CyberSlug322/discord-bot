@@ -47,6 +47,7 @@ mongoose.connect(MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true })
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('mongoDB connected')
+ 
 })
 
 
