@@ -1,20 +1,5 @@
-
-const { Player } = require("discord-player")
-
-
-
-
-   
-
 module.exports = async (client, interaction) => {
-
-    
-    client.player = new Player(client, {
-    ytdlOptions: {
-        quality: "highestaudio",
-        highWaterMark: 1 << 25
-    }
-})
+   
     if (!interaction.isCommand()) return
 
     const slashcmd = client.slashcommands.get(interaction.commandName)
@@ -22,7 +7,4 @@ module.exports = async (client, interaction) => {
 
     await interaction.deferReply()
     await slashcmd.run({ client, interaction })
-
-
-    
 }

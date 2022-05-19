@@ -7,6 +7,7 @@ module.exports = {
 	run: async ({ client, interaction }) => {
         if (!interaction.member.voice.channel) return interaction.editReply("You need to be in a VC to use this command")
 		const queue = await client.player.createQueue(interaction.guild)
+        console.log(queue)
 		if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
 		let embed = new MessageEmbed()
@@ -19,7 +20,7 @@ module.exports = {
                         return interaction.editReply("No results")
                     
                     const song = result.tracks[0]
-                     queue.addTrack(song)
+                    queue.addTrack(song)
                     embed
                         .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
                         .setThumbnail(song.thumbnail)
