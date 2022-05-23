@@ -1,7 +1,7 @@
 const {NewNames} = require('../src/mongo');
 
 
-  class NamesDB {
+class NamesDB {
 
     constructor () {
 
