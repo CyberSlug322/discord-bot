@@ -3,14 +3,14 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 const { QueryType } = require("discord-player")
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("playcill").setDescription("play cill 24/7"),
-   	run: async ({ client, interaction }) => {
+    data: new SlashCommandBuilder().setName("playfactorio").setDescription("play full soundtrack Factorio"),
+	run: async ({ client, interaction }) => {
         if (!interaction.member.voice.channel) return interaction.editReply("You need to be in a VC to use this command")
 		const queue = await client.player.createQueue(interaction.guild)
 		if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
 		let embed = new MessageEmbed()
-        let url = "https://www.youtube.com/watch?v=ceqgwo7U28Y"
+        let url = "https://www.youtube.com/watch?v=T6OZrUbLJ1M"
                     const result = await client.player.search(url, {
                         requestedBy: interaction.user,
                         searchEngine: QueryType.YOUTUBE_VIDEO

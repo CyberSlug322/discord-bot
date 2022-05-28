@@ -1,7 +1,7 @@
 const { Client, Intents} = require('discord.js');
 const { token } = require('./config.json')
 const loader = require('./src/loader');
-const { allowedNodeEnvironmentFlags } = require('process'); // ??
+const { allowedNodeEnvironmentFlags } = require('process');
 const deployCommands = require('./src/deployCommands')
 const { Player } = require("discord-player")
 const client = new Client({ intents: [
@@ -20,5 +20,5 @@ client.player = new Player(client, {
 })
 
 loader(client);
-deployCommands(client)
+deployCommands(client);
 client.login(token); 
