@@ -3,14 +3,14 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 const { QueryType } = require("discord-player")
 
 module.exports = {
-    data: new SlashCommandBuilder().setName("playlisthunt").setDescription("play playlist Hunt"),
+    data: new SlashCommandBuilder().setName("playlistrammstein").setDescription("play playlist Rammstein"),
 	run: async ({ client, interaction }) => {
         if (!interaction.member.voice.channel) return interaction.editReply("You need to be in a VC to use this command")
 		const queue = await client.player.createQueue(interaction.guild)
 		if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
 		let embed = new MessageEmbed()
-        let url = "https://www.youtube.com/watch?v=ived-2qklPk&list=PLvZPl-c4r2KaoP4fKaVMFDA_oQmxHCqlU"
+        let url = "https://www.youtube.com/watch?v=W3q8Od5qJio&list=PLvZPl-c4r2Ka51DEyZL4ofAB0kVqzjBDb"
                     const result = await client.player.search(url, {
                         requestedBy: interaction.user,
                         searchEngine: QueryType.YOUTUBE_PLAYLIST

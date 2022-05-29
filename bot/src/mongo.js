@@ -1,5 +1,5 @@
 const mongoose = require('mongoose') ;
-
+const Names = require("../data/allNames.json")
 const {MONGO_URL} = require('../config.json')
 
 const userSchema = new mongoose.Schema({
@@ -43,10 +43,30 @@ const User = mongoose.model('User', userSchema );
 const Submissions = mongoose.model("Submissions", submissionsSchema);
 const NewNames = mongoose.model('NewNames', newNameSchema );
 
+
+const kalSchema = new mongoose.Schema({
+  iq: Number,
+  net: Array,
+}, { versionKey: false });
+
+const Kal = mongoose.model('kal', userSchema );
+
 mongoose.connect(MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('mongoDB connected')
+  const allNames = new NewNames({
+    all_fit: Names.all_fit,
+    he_names: Names.he_names,
+    he_adjectives: Names.he_adjectives,
+    neutral_names: Names.neutral_names,
+    neutral_adjectives: Names.neutral_adjectives,
+    she_names: Names.she_names,
+    she_adjectives: Names.she_adjectives
+  })
+  allNames.save();
+  const nekal = new Kal({iq:78,net:[]})
+  nekal.save(); 
  
 })
 
@@ -57,3 +77,4 @@ module.exports = {User, Submissions, NewNames}
 
 
   
+

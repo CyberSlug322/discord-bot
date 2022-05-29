@@ -24,5 +24,6 @@ module.exports = {
                     .setDescription(`**${result.tracks.length} songs from [${playlist.title}](${playlist.url})** have been added to the Queue`)
                     .setThumbnail(playlist.thumbnail)
                 await interaction.editReply({embeds: [embed] })
+                if (!queue.playing) await queue.play()
 },
 }
