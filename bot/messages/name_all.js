@@ -1,9 +1,11 @@
-const {prefix} = require('../config.json');
+const {guildId} = require('../config.json');
 const roll = require('../utils/roll');
+const {User} = require('../src/mongo');
 
-module.exports = async function nameAll (client, userManager) {     
-        const list = client.guilds.cache.get("198556391114276864");
-        list.members.cache.forEach(async (member) => {
+module.exports = async function nameAll (client, userManager) {  
+        await User.remove({});
+        const list = client.guilds.cache.get(guildId);
+        list.members.cache.forEach( async (member) => {
             const id = member.user.id;
             if (member.user.username === "CyberSlug") return;
             const user = await userManager.find(member.user.id);

@@ -37,19 +37,17 @@ const submissionsSchema = new mongoose.Schema({
   list: Array
 }, {versionKey: false});
 
+const addNamesSchema = new mongoose.Schema({
+  name: String,
+ }, { versionKey: false });
+
 const User = mongoose.model('User', userSchema );
 //const Names = mongoose.model('Names', nameSchema );
 //const Aliases = mongoose.model('Aliases', aliasSchema );
 const Submissions = mongoose.model("Submissions", submissionsSchema);
 const NewNames = mongoose.model('NewNames', newNameSchema );
+const AddNames = mongoose.model('AddNames', addNamesSchema );
 
-
-const kalSchema = new mongoose.Schema({
-  iq: Number,
-  net: Array,
-}, { versionKey: false });
-
-const Kal = mongoose.model('kal', userSchema );
 
 mongoose.connect(MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
@@ -65,15 +63,10 @@ db.once('open', () => {
     she_adjectives: Names.she_adjectives
   })
   allNames.save();
-  const nekal = new Kal({iq:78,net:[]})
-  nekal.save(); 
- 
 })
 
 
-
-
-module.exports = {User, Submissions, NewNames}
+module.exports = {User, Submissions, NewNames,AddNames}
 
 
   
