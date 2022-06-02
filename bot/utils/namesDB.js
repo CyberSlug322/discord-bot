@@ -9,7 +9,7 @@ class NamesDB {
 
     static async getAllNames() {  
         const names = await NewNames.find({}); // Не правильно достает, надо переделать
-        return names[0]
+        return names[names.length-1]
     }
 
     static async getAliases() {

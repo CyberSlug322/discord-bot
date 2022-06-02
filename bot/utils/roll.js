@@ -37,7 +37,7 @@ async function rollSecondName() {
 function addDependenciesToNames(obj) {
     const arr = [];
     arr.push([obj.all_fit, [2], 44])
-    arr.push([obj.he_names, [0,2], 99])
+    arr.push([obj.he_names, [2], 99])
     arr.push([obj.he_adjectives, [0,1], 137])
     arr.push([obj.neutral_names, [4], 155])
     arr.push([obj.neutral_adjectives, [3], 170])

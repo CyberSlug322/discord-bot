@@ -1,7 +1,5 @@
 const {prefix} = require('../config.json');
 const {UserManager} = require('../utils/userManager');
-// const rollName = require('../messages/roll_name');
-// const rollAlias = require('../messages/roll_alias');
 const nameAll = require('../messages/name_all');
 const submit = require('../messages/submit');
 const roll_full_name = require('../messages/roll_full_name');
@@ -22,17 +20,25 @@ async function nameInputHandle(client, message) {
     // rollAlias(message, userManager);
     roll_full_name(message, userManager);
     if (message.content.startsWith(`${prefix}name_all`)) {
-        if (!message.member.user.username === "CyberSlug" || !message.member.user.username === "VITOVT") {
-            message.reply(`Эта команда не доступна `);
-            
-        } else {
-            nameAll(client, userManager);
-        }
-        
-    }
+        if (message.member.user.username === "CyberSlug") return nameAll(client, userManager);
+        if (message.member.user.username === "VITOVT") return nameAll(client, userManager);
+        message.reply(`Эта команда не доступна `)   
+    } 
     submit(message);
    
-     
+    if (message.content.startsWith(`${prefix}get_name_list`)) {
+        if (message.member.user.username !== "CyberSlug") return message.reply(`No! ${":cowboy:"}`);
+            const res = await userManager.getListNames();
+            if(res === "") return message.reply("List error")
+            message.reply(res);
+    }
+
+    if (message.content.startsWith(`${prefix}remove_name_list`)) {
+        if (message.member.user.username !== "CyberSlug") return message.reply(`No! ${":cowboy:"}`);
+        await userManager.removeListNames();
+        message.reply("List has been deleted");
+    }
+
         
     
     if (message.content.startsWith(`${prefix}Ты бот`)) {
@@ -67,18 +73,13 @@ async function nameInputHandle(client, message) {
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣤⣼⣿⣿⣿⣿⣦⣤⣤⣤⣤⣤⣤⣿⣿⣷⣦⣤⣤⣤⣤⣤⣶⣿⣿⣷⣤⣤⣤⣿
         ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿`)
     }
-    if (message.content.startsWith(`${prefix}give_points`)) {
-        if (message.member.user.username !== "CyberSlug") {
-            message.reply('У вас недостаточно прав для этой команды');
-        } else {
-            const [id, amount] = message.content.split(' ')[1].split('_');
-            const [isChanged, currentAmount] = changeUserPoints(id, amount);
-            if ( isChanged ) {
-                message.reply(`Points successfuly added to user #${id} `);
-            } else {
-                message.reply(`oshibka`)
-            }
-            
-        }
+    if (message.content.startsWith(`${prefix}points`)) {
+        if (message.member.user.username !== "CyberSlug") return message.reply(`No! ${":cowboy:"}`);
+            const [comm, id, amount] = message.content.split(' ');
+            const user = await userManager.find(id)
+            const fullname = await userManager.getFullName(user)
+            userManager.changePoints(id, amount);
+            message.reply(`${fullname} got ${amount} points.`);
+        
     }
 }

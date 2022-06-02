@@ -20,5 +20,5 @@ module.exports = async function nameAll (client, userManager) {
             //const fullName = userManager.getFullName(newUser);
             await member.setNickname(`${name[0]} ${name[1]}`);
         })             
-    
+
 }

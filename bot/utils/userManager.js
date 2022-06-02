@@ -1,4 +1,5 @@
 const {User} = require('../src/mongo')
+const {AddNames} = require('../src/mongo')
 const {roll} = require('./roll');
 class UserManager {
 
@@ -53,6 +54,19 @@ class UserManager {
         const name = user.name || '';
         const alias = user.alias || '';
         return name + ' ' + alias;
+    }
+
+    async getListNames() {
+        const list = await AddNames.find({});
+        const names = []
+        for (const file of list) {
+            names.push("#" + file.newname)
+        }
+        return names.join(" ");
+    }
+
+    async removeListNames() {
+        AddNames.remove({});
     }
 }
 

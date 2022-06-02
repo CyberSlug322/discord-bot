@@ -38,7 +38,7 @@ const submissionsSchema = new mongoose.Schema({
 }, {versionKey: false});
 
 const addNamesSchema = new mongoose.Schema({
-  name: String,
+  newname: String,
  }, { versionKey: false });
 
 const User = mongoose.model('User', userSchema );
