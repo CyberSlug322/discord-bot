@@ -3,6 +3,7 @@ const {UserManager} = require('../utils/userManager');
 const nameAll = require('../messages/name_all');
 const submit = require('../messages/submit');
 const roll_full_name = require('../messages/roll_full_name');
+const {MessageAttachment} = require("discord.js")
 
 const userManager = new UserManager;
 
@@ -12,12 +13,16 @@ module.exports = (client, message) => {
 }
 
 async function nameInputHandle(client, message) {
+
+    if (message.member.user.username === "Steeeasy") {
+        const attachment = new MessageAttachment("./bot/data/stass.jpeg")
+        return message.reply({ files:[attachment]})
+    }
+
     const id = message.author.id;
     message.react('🤔')
     if (message.author.bot || message.channel.type === 'dm') return;
     if (!message.content.startsWith(prefix)) return;
-    // rollName(message, userManager);
-    // rollAlias(message, userManager);
     roll_full_name(message, userManager);
     if (message.content.startsWith(`${prefix}name_all`)) {
         if (message.member.user.username === "CyberSlug") return nameAll(client, userManager);

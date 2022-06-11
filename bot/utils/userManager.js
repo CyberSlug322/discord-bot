@@ -1,5 +1,6 @@
 const {User} = require('../src/mongo')
 const {AddNames} = require('../src/mongo')
+const {BlackList} = require('../src/mongo')
 const {roll} = require('./roll');
 class UserManager {
 
@@ -11,7 +12,6 @@ class UserManager {
         const newName = await roll();               
         const user = new User({id, name:newName[0], alias: newName[1], points: 10});
         await user.save();
-        // const fullName = await this.getFullName(user);
         const fullName = `${newName[0]} ${newName[1]}`;
         await member.setNickname(fullName);
     }
@@ -51,8 +51,8 @@ class UserManager {
     }
 
     async getFullName(user) {
-        const name = user.name || '';
-        const alias = user.alias || '';
+        const name = user?.name || '';
+        const alias = user?.alias || '';
         return name + ' ' + alias;
     }
 
@@ -63,6 +63,11 @@ class UserManager {
             names.push("#" + file.newname)
         }
         return names.join(" ");
+    }
+
+    async getBlackList() {
+        let list = await BlackList.find({});
+        return list
     }
 
     async removeListNames() {

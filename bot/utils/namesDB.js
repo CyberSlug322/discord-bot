@@ -1,6 +1,5 @@
 const {NewNames} = require('../src/mongo');
 
-
 class NamesDB {
 
     constructor () {
@@ -8,16 +7,9 @@ class NamesDB {
     }
 
     static async getAllNames() {  
-        const names = await NewNames.find({}); // Не правильно достает, надо переделать
+        const names = await NewNames.find({});
         return names[names.length-1]
     }
-
-    static async getAliases() {
-        const aliases = await NewNames.find({});
-        return aliases[0][0];
-    }
-
-
 }
 
 module.exports = {NamesDB}

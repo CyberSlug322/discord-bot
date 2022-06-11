@@ -1,9 +1,13 @@
 const { Client, Intents} = require('discord.js');
-const { token } = require('./config.json')
+const { token, guildId } = require('./config.json');
 const loader = require('./src/loader');
-const { allowedNodeEnvironmentFlags } = require('process');
-const deployCommands = require('./src/deployCommands')
-const { Player } = require("discord-player")
+const deployCommands = require('./src/deployCommands');
+const { Player } = require("discord-player");
+const { underscore } = require('@discordjs/builders');
+const {UserManager} = require('./utils/userManager');
+const checkName = require('./utils/checkName');
+const userManager = new UserManager;
+
 const client = new Client({ intents: [
 	Intents.FLAGS.GUILDS,
 	Intents.FLAGS.GUILD_MEMBERS,
@@ -19,6 +23,26 @@ client.player = new Player(client, {
     }
 })
 
+async function checkerNicks() {
+	await new Promise(r => setTimeout(() => r(console.log("raboci")),11000));
+	const list = await client.guilds.cache.get(guildId);
+	setInterval(await checkName(list, client), 180000);
+}
+
+
+
+async function checkerNicks2() {
+	setTimeout(await checkName(await userManager.getBlackList(), client),100);
+}
+
+setInterval(checkerNicks2, 5000);
+
+
+
+
+
+checkerNicks();
+
 loader(client);
 deployCommands(client);
-client.login(token); 
+client.login(token);
