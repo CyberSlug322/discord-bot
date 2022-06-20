@@ -1,6 +1,6 @@
 const mongoose = require('mongoose') ;
 const Names = require("../data/allNames.json")
-const {MONGO_URL} = require('../config.json')
+const {MONGO_URL} = require('../config')
 
 const userSchema = new mongoose.Schema({
   id: Number,

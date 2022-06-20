@@ -1,6 +1,6 @@
 const { REST } = require("@discordjs/rest")
 const fs = require('fs');
-const { clientId, guildId, token } = require('../config.json')
+const { clientId, guildId, token } = require('../config')
 const { Routes } = require("discord-api-types/v9")
 const path = require('path');
 const pathToCommands = path.resolve(__dirname, '../slash/');

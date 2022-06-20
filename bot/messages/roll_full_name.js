@@ -1,4 +1,4 @@
-const {prefix} = require('../config.json');
+const {prefix} = require('../config.js');
 const {roll} = require('../utils/roll');
 
 module.exports = async function rollName(message, userManager) {

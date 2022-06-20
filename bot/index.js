@@ -1,5 +1,5 @@
 const { Client, Intents} = require('discord.js');
-const { token, guildId } = require('./config.json');
+const { token, guildId } = require('./config.js');
 const loader = require('./src/loader');
 const deployCommands = require('./src/deployCommands');
 const { Player } = require("discord-player");

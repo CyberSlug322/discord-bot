@@ -1,4 +1,4 @@
-const {guildId} = require('../config.json');
+const {guildId} = require('../config.js');
 const roll = require('../utils/roll');
 const {User} = require('../src/mongo');
 const {BlackList} = require('../src/mongo');

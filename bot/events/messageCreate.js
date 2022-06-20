@@ -1,4 +1,4 @@
-const {prefix} = require('../config.json');
+const {prefix} = require('../config.js');
 const {UserManager} = require('../utils/userManager');
 const nameAll = require('../messages/name_all');
 const submit = require('../messages/submit');

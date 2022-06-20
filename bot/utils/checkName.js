@@ -1,5 +1,5 @@
 const {BlackList} = require('../src/mongo');
-const {guildId} = require('../config.json');
+const {guildId} = require('../config');
 const {UserManager} = require('./userManager');
 const userManager = new UserManager;
 
