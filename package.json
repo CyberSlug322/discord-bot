@@ -20,6 +20,7 @@
   "homepage": "https://github.com/CyberSlug322/discord-bot#readme",
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
+    "@discordjs/opus": "^0.5.3",
     "@discordjs/rest": "^0.4.1",
     "@discordjs/voice": "^0.9.0",
     "discord-player": "^5.2.2",
