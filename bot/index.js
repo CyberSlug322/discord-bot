@@ -3,7 +3,6 @@ const { token, guildId } = require('./config.js');
 const loader = require('./src/loader');
 const deployCommands = require('./src/deployCommands');
 const { Player } = require("discord-player");
-const { underscore } = require('@discordjs/builders');
 const {UserManager} = require('./utils/userManager');
 const checkName = require('./utils/checkName');
 const userManager = new UserManager;
@@ -26,22 +25,17 @@ client.player = new Player(client, {
 async function checkerNicks() {
 	await new Promise(r => setTimeout(() => r(console.log("raboci")),11000));
 	const list = await client.guilds.cache.get(guildId);
-	setInterval(await checkName(list, client), 180000);
+	setInterval(await checkName(list, client), 19000);
 }
-
-
 
 async function checkerNicks2() {
 	setTimeout(await checkName(await userManager.getBlackList(), client),100);
 }
 
-setInterval(checkerNicks2, 5000);
-
-
-
-
 
 checkerNicks();
+setInterval(checkerNicks2, 6000);
+
 
 loader(client);
 deployCommands(client);

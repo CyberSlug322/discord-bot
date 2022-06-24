@@ -4,10 +4,6 @@ const {BlackList} = require('../src/mongo')
 const {roll} = require('./roll');
 class UserManager {
 
-    constructor() {
-
-    }
-
     async create(member, id) {
         const newName = await roll();               
         const user = new User({id, name:newName[0], alias: newName[1], points: 10});
@@ -73,6 +69,7 @@ class UserManager {
     async removeListNames() {
         AddNames.remove({});
     }
+    
 }
 
 module.exports = {UserManager}

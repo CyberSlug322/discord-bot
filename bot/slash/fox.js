@@ -3,8 +3,13 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 module.exports = {
 	data: new SlashCommandBuilder().setName("fox").setDescription("Send random image fox"),
 	run: async ({ client, interaction }) => {
+        try{
             const a = await fetch("https://randomfox.ca/floof")
             const data = await a.json()
             await interaction.editReply(data.image)
         }
+        catch(err){
+            console.log(err)
+        } 
+    }
 }
