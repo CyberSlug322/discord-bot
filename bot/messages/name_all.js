@@ -11,16 +11,20 @@ module.exports = async function nameAll (client, userManager) {
         list.members.cache.forEach( async (member) => {
             const id = member.user.id;
             if (member.user.username === "CyberSlug") return;
-            if (member.user.username === "VITOVT") return;
             const user = await userManager.find(member.user.id);
             if ( user === null) { 
                 await userManager.create(member, id);               
                 return;
             } 
-            const name = await roll();
-            await userManager.changeName(id, name);
-            await member.setNickname(`${name[0]} ${name[1]}`);
+            // const name = await roll();
+            // console.log("step3")
+            // await userManager.changeName(id, name);      // pal'
+            // console.log("step4")
+            // await member.setNickname(`${name[0]} ${name[1]}`);
+            // console.log("step5")
+            
         })
+        
 
     }
     catch(err){

@@ -42,7 +42,7 @@ try{
         arr.push([obj.neutral_names, [4], 0])
         arr.push([obj.neutral_adjectives, [3], 180])
         arr.push([obj.she_names, [6], 0])
-        arr.push([obj.she_adjectives, [5], 240])
+        arr.push([obj.she_adjectives, [5], 220])
         return arr;
     }
 

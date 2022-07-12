@@ -10,7 +10,6 @@ module.exports = async  (list, client) => async () => {
         if (list?.members) {
             list?.members?.cache?.forEach( async (member) => {
                 if(member.user.username === "CyberSlug") return;
-                if(member.user.username === "VITOVT") return;
                 const id = member.user.id;
                 const user = await userManager.find(id);
                 const nickDB = await userManager.getFullName(user);
@@ -32,7 +31,6 @@ module.exports = async  (list, client) => async () => {
                 const objGuild = await client.guilds.cache.get(guildId);
                 await objGuild.members.cache.forEach( async (person) => {
                     if(person.user.username === "CyberSlug") return;
-                    if(person.user.username === "VITOVT") return;
                     if(person.user.id === id) {
                         const blackUser = person;
                         const nickDS1 = blackUser.displayName;
