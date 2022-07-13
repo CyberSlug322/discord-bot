@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-
+/bot/config.js
 /names.json
 # production
 /build
