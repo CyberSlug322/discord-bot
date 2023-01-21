@@ -25,7 +25,7 @@ module.exports = async (client, message) => {
             const attachment = new MessageAttachment("./bot/data/stass.jpeg")
             message.reply({ files:[attachment]})
         }
-        if (message.member.user.username === "VITOVT") {
+        if (message.member.user.username === "Вася") {
             const attachment = new MessageAttachment("./bot/data/mops.jpeg")
             message.reply({files:[attachment]})
         }
