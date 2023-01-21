@@ -1,14 +1,13 @@
-module.exports = async (client, interaction) => {
-    try{   
+export const interactionCreate = async (client, interaction) => {
+    try {
         if (!interaction.isCommand()) return
 
         const slashcmd = client.slashcommands.get(interaction.commandName)
-        if (!slashcmd) interaction.reply("Not a valid slash command")
+        if (!slashcmd) interaction.reply('Not a valid slash command')
 
         await interaction.deferReply()
         await slashcmd.run({ client, interaction })
-    }
-    catch(err){
+    } catch (err) {
         console.log(err)
-    } 
+    }
 }

@@ -1,13 +1,8 @@
-const path = require('path');
-const fs = require('fs');
-const pathToUsers = path.resolve(__dirname, '../data/users.json');
+import path from 'path'
+import fs from 'fs'
 
-module.exports = {}
+const pathToUsers = path.resolve(__dirname, '../data/users.json')
 
-function getSuccessPhrase(type) {
+function getSuccessPhrase(type) {}
 
-}
-
-function getFailurePhrase(type) {
-    
-}
+function getFailurePhrase(type) {}

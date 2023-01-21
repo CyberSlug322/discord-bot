@@ -1,39 +1,41 @@
-const { REST } = require("@discordjs/rest")
-const fs = require('fs');
-const { clientId, guildId, token } = require('../config')
-const { Routes } = require("discord-api-types/v9")
-const path = require('path');
-const pathToCommands = path.resolve(__dirname, '../slash/');
-const Discord = require("discord.js")
+import { REST } from '@discordjs/rest'
+import fs from 'fs'
+import { clientId, guildId, token } from '../config.js'
+import { Routes } from 'discord-api-types/v9'
+import path from 'path'
 
-module.exports = (client) => {
-try{
-    client.slashcommands = new Discord.Collection()
+import Discord from 'discord.js'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 
-    let commands = []
+const __dirname = path.dirname('deployCommands.js')
+const pathToCommands = path.resolve(__dirname, '../slash/')
 
-    const slashFiles = fs.readdirSync(pathToCommands).filter(file => file.endsWith(".js"))
-
-    for (const file of slashFiles){
-        const slashcmd = require(`../slash/${file}`)
-        client.slashcommands.set(slashcmd.data.name, slashcmd)
-        commands.push(slashcmd.data.toJSON())
-    }
-
-    const rest = new REST({ version: "9" }).setToken(token)
-    console.log("Deploying slash commands")
-    rest.put(Routes.applicationGuildCommands(clientId, guildId), {body: commands})
-        .then(() => {
-            console.log("Successfully loaded")
-        })
-        .catch((err) => {
-            if (err){
-                console.log(err)
-                process.exit(1)
-            }
-        })
-    }
-    catch(err){
-        console.log(err)
-    } 
+export const deployCommands = (client) => {
+    // try {
+    //     client.slashcommands = new Discord.Collection()
+    //     let commands = []
+    //     const slashFiles = fs.readdirSync(pathToCommands).filter((file) => file.endsWith('.js'))
+    //     for (const file of slashFiles) {
+    //         const slashcmd = require(`../slash/${file}`)
+    //         client.slashcommands.set(slashcmd.data.name, slashcmd)
+    //         commands.push(slashcmd.data.toJSON())
+    //     }
+    //     const rest = new REST({ version: '9' }).setToken(token)
+    //     console.log('Deploying slash commands')
+    //     rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+    //         body: commands,
+    //     })
+    //         .then(() => {
+    //             console.log('Successfully loaded')
+    //         })
+    //         .catch((err) => {
+    //             if (err) {
+    //                 console.log(err)
+    //                 process.exit(1)
+    //             }
+    //         })
+    // } catch (err) {
+    //     console.log(err)
+    // }
 }

@@ -1,3 +1,3 @@
-module.exports = () => {
-    console.log("server started");
+export const ready = () => {
+    console.log('server started')
 }

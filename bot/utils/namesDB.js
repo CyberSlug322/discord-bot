@@ -1,15 +1,10 @@
-const {NewNames} = require('../src/mongo');
+import { NewNames } from '../src/mongo.js'
 
-class NamesDB {
+export class NamesDB {
+    constructor() {}
 
-    constructor () {
-
-    }
-
-    static async getAllNames() {  
-        const names = await NewNames.find({});
-        return names[names.length-1]
+    static async getAllNames() {
+        const names = await NewNames.find({})
+        return names[names.length - 1]
     }
 }
-
-module.exports = {NamesDB}
