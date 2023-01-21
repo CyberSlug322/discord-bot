@@ -6,6 +6,6 @@ export const loadEvents = (client) => {
     console.log(`Loading events...`)
 
     for (const event of events) {
-        client.on(event.name, event.bind(null, client))
+        client.on(event.name, bind())
     }
 }

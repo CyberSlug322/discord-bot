@@ -33,7 +33,7 @@ export const messageCreate = async (client, message) => {
 
         if (!message.content.startsWith(prefix)) return
 
-        rollFullName(message, userManager)
+        roll_full_name(message, userManager)
         if (message.content.startsWith(`${prefix}name_all`)) {
             if (message.member.user.username !== 'CyberSlug' && message.member.user.username !== 'VITOVT')
                 return message.reply(`Эта команда не доступна `)

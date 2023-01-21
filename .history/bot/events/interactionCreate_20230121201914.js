@@ -1,6 +1,6 @@
 export const interactionCreate = async (client, interaction) => {
     try {
-        console.log(interaction)
+        console.log
         if (!interaction?.isCommand()) return
 
         const slashcmd = client.slashcommands.get(interaction.commandName)
