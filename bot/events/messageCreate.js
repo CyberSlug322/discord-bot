@@ -14,13 +14,13 @@ const userManager = new UserManager()
 
 export const messageCreate = async (client, message) => {
     try {
-        let isWorking = false
+        // let isWorking = false
         const id = message.author.id
         message.react('🤔')
         if (message.author.bot || message.channel.type === 'dm') return
 
-        console.log(isWorking)
-        if (isWorking) return message.reply('Bot zanet')
+        // console.log(isWorking)
+        // if (isWorking) return message.reply('Bot zanet')
 
         if (message.member.user.username === 'Steeeasy') {
             const attachment = new MessageAttachment('./bot/data/stass.jpeg')
@@ -37,8 +37,8 @@ export const messageCreate = async (client, message) => {
         if (message.content.startsWith(`${prefix}name_all`)) {
             if (message.member.user.username !== 'CyberSlug' && message.member.user.username !== 'VITOVT')
                 return message.reply(`Эта команда не доступна `)
-            isWorking = true
-            setTimeout(() => (isWorking = false), 30000)
+            // isWorking = true
+            // setTimeout(() => (isWorking = false), 30000)
             return nameAll(client, userManager)
         }
         submit(message)

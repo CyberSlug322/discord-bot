@@ -1,35 +1,36 @@
-const { MessageEmbed } = require("discord.js")
-const { SlashCommandBuilder } = require("@discordjs/builders")
-const { QueryType } = require("discord-player")
+import { MessageEmbed } from 'discord.js'
+import { SlashCommandBuilder } from '@discordjs/builders'
+import { QueryType } from 'discord-player'
 
-module.exports = {
-    data: new SlashCommandBuilder().setName("playvideo").setDescription("play YOUTUBE").addStringOption((option) => option.setName("url").setDescription("the youtube url").setRequired(true)),
-	run: async ({ client, interaction }) => {
-        try{
-            if (!interaction.member.voice.channel) return interaction.editReply("You need to be in a VC to use this command")
+export const playYouTube = {
+    data: new SlashCommandBuilder()
+        .setName('playvideo')
+        .setDescription('play YOUTUBE')
+        .addStringOption((option) => option.setName('url').setDescription('the youtube url').setRequired(true)),
+    run: async ({ client, interaction }) => {
+        try {
+            if (!interaction.member.voice.channel) return interaction.editReply('You need to be in a VC to use this command')
             const queue = await client.player.createQueue(interaction.guild)
             if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
             let embed = new MessageEmbed()
-            let url = interaction.options.getString("url")
-                        const result = await client.player.search(url, {
-                            requestedBy: interaction.user,
-                            searchEngine: QueryType.YOUTUBE_VIDEO
-                        })
-                        if (result.tracks.length === 0)
-                            return interaction.editReply("No results")
-                        
-                        const song = result.tracks[0]
-                        queue.addTrack(song)
-                        embed
-                            .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
-                            .setThumbnail(song.thumbnail)
-                            .setFooter({ text: `Duration: ${song.duration}`})
-                        if (!queue.playing) await queue.play()
-                            await interaction.editReply({ embeds: [embed] })
-        }
-        catch(err){
+            let url = interaction.options.getString('url')
+            const result = await client.player.search(url, {
+                requestedBy: interaction.user,
+                searchEngine: QueryType.YOUTUBE_VIDEO,
+            })
+            if (result.tracks.length === 0) return interaction.editReply('No results')
+
+            const song = result.tracks[0]
+            queue.addTrack(song)
+            embed
+                .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
+                .setThumbnail(song.thumbnail)
+                .setFooter({ text: `Duration: ${song.duration}` })
+            if (!queue.playing) await queue.play()
+            await interaction.editReply({ embeds: [embed] })
+        } catch (err) {
             console.log(err)
-        } 
+        }
     },
 }

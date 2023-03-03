@@ -22,6 +22,6 @@ client.player = new Player(client, {
 })
 
 loadEvents(client)
-//deployCommands(client)
+deployCommands(client)
 client.login(token)
 // timerCheckNames(client);
