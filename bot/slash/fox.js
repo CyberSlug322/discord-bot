@@ -8,6 +8,7 @@ export const fox = {
         try {
             const a = await fetch('https://randomfox.ca/floof')
             const data = await a.json()
+            console.log(a, data)
             await interaction.editReply(data.image)
         } catch (err) {
             console.log(err)

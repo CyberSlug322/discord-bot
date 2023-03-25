@@ -1,21 +1,13 @@
-import { guildId } from '../config.js'
-import { UserManager } from '../utils/userManager.js'
-import { id } from '../events/messageCreate.js'
-import checkName from '../utils/checkName.js'
+export async function euBotSeller(lotsDB: any) {
+    try {
+        const inventary = await axios.get('https://market.csgo.com/api/v2/my-inventory/?key=2KPPGgHh2YEgP3L0h382Y6B5Ml7EFK3')
+        const newArray = await inventary.items.map( (lot: any) => {
+            lotsDB.forEach((obj: any) => {
+                if (lot.id === obj.id)
+            })
+        });
 
-const userManager = new UserManager()
-
-export const check = (client) => {
-    // async function checkerNicks() {
-    //     let {isWorking} = require('../events/messageCreate')
-    //     console.log(isWorking)
-    //     if(isWorking) console.log(isWorking)
-    //     setTimeout(await checkName(client.guilds.cache.get(guildId), client), 100);
-    // }
-    // async function checkerNicks2() {
-    //     console.log(id)
-    //     setTimeout(await checkName(await userManager.getBlackList(), client),100);
-    // }
-    // setInterval(checkerNicks, 16000);
-    // setInterval(checkerNicks2, 6000);
-}
+    } catch (error) {
+        console.error(error);
+    }
+};

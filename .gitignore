@@ -2,12 +2,14 @@
 
 # dependencies
 /node_modules
+/.history
 /bot/config.js
 /names.json
 # production
 /build
 
 # misc
+.history
 .DS_Store
 .env.local
 .env.development.local
