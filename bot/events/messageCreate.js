@@ -4,6 +4,8 @@ import { nameAll } from '../messages/name_all.js'
 import { submit } from '../messages/submit.js'
 import { rollFullName } from '../messages/roll_full_name.js'
 import { MessageAttachment } from 'discord.js'
+import { iiBotMessage } from '../messages/iiBot.js'
+import { iiBotImage } from '../messages/iiBotImage.js'
 
 const userManager = new UserManager()
 
@@ -19,8 +21,14 @@ export const messageCreate = async (client, message) => {
         message.react('🤔')
         if (message.author.bot || message.channel.type === 'dm') return
 
-        // console.log(isWorking)
-        // if (isWorking) return message.reply('Bot zanet')
+        if (message.content.startsWith(`${prefix}bot`)) {
+            console.log(message.content.slice(4))
+            return message.reply(await iiBotMessage(message.content.slice(3)))
+        }
+        if (message.content.startsWith(`${prefix}image`)) {
+            console.log(message.content.slice(1))
+            return message.reply(await iiBotImage(message.content.slice(6)))
+        }
 
         if (message.member.user.username === 'Steeeasy') {
             const attachment = new MessageAttachment('./bot/data/stass.jpeg')
