@@ -16,17 +16,19 @@ const userManager = new UserManager()
 
 export const messageCreate = async (client, message) => {
     try {
-        // let isWorking = false
         const id = message.author.id
         message.react('🤔')
         if (message.author.bot || message.channel.type === 'dm') return
 
         if (message.content.startsWith(`${prefix}bot`)) {
-            console.log(message.content.slice(4))
-            return message.reply(await iiBotMessage(message.content.slice(3)))
+            if (message.content.slice(5, 7) === '-c') {
+                return message.reply(await iiBotMessage(message.content.slice(7), id, false))
+            }
+            return message.reply(await iiBotMessage(message.content.slice(4), id))
         }
+
         if (message.content.startsWith(`${prefix}image`)) {
-            console.log(message.content.slice(1))
+            console.log(message.content.slice(6))
             return message.reply(await iiBotImage(message.content.slice(6)))
         }
 
