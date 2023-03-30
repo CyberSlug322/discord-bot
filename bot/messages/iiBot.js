@@ -4,7 +4,7 @@ const configuration = new Configuration({ apiKey: API_KEY })
 const openai = new OpenAIApi(configuration)
 const contextObject = {}
 
-export const iiBotMessage = async (message, id, clearContext = true) => {
+export const iiBotMessage = async (message, id, username, clearContext = true) => {
     if (!contextObject[id] || clearContext) {
         contextObject[id] = []
     }
@@ -15,8 +15,8 @@ export const iiBotMessage = async (message, id, clearContext = true) => {
     const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: contextObject[id],
+        max_tokens: 1999,
     })
     contextObject[id].push({ role: 'assistant', content: response?.data?.choices?.[0]?.message?.content })
-
-    return response?.data?.choices?.[0]?.message?.content ?? 'error iiBot'
+    return `${username}, ${response?.data?.choices?.[0]?.message?.content}`
 }
