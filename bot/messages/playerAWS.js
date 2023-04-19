@@ -4,7 +4,7 @@ import Fs from 'fs'
 const queue = []
 let connection
 const player = createAudioPlayer()
-player.on('stateChange', (oldState, newState) => {
+player.on('stateChange', async (oldState, newState) => {
     if (newState.status === 'idle') {
         if (!queue.length) {
             const directory = `./bot/data/mp3`

@@ -1,8 +1,8 @@
-import Discord from 'discord.js'
+import Discord, { Message } from 'discord.js'
 import { token, guildId } from './config.js'
 import { loadEvents } from './src/loader.js'
 import { deployCommands } from './src/deployCommands.js'
-import { Player } from 'discord-player'
+import { Player, GuildQueue } from 'discord-player'
 
 const client = new Discord.Client({
     intents: [
@@ -12,11 +12,16 @@ const client = new Discord.Client({
         Discord.GatewayIntentBits.GuildVoiceStates,
         Discord.GatewayIntentBits.GuildPresences,
         Discord.GatewayIntentBits.MessageContent,
+        Discord.GatewayIntentBits.GuildModeration,
+        Discord.GatewayIntentBits.AutoModerationConfiguration,
+        Discord.GatewayIntentBits.AutoModerationExecution,
+        Discord.GatewayIntentBits.GuildScheduledEvents,
+        Discord.GatewayIntentBits.GuildInvites,
+        Discord.GatewayIntentBits.GuildIntegrations,
     ],
 })
 
 const player = new Player(client)
-player.createPlaylist
 export const getPlayer = () => {
     return player
 }

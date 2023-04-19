@@ -3,25 +3,27 @@ import { UserManager } from '../utils/userManager.js'
 import { nameAll } from '../messages/name_all.js'
 import { submit } from '../messages/submit.js'
 import { rollFullName } from '../messages/roll_full_name.js'
-import { MessagePayload } from 'discord.js'
+import { MessagePayload, EmbedBuilder } from 'discord.js'
 import { iiBotMessage } from '../messages/iiBot.js'
 import { iiBotImage } from '../messages/iiBotImage.js'
 import { playerText } from '../messages/playerAWS.js'
 import { voiceBot } from '../messages/iiVoiceBot.js'
 import { sourse } from '../messages/iiVoiceBot.js'
-import { playerMusic } from '../messages/playerMusic.js'
+import { playerMusic, playerInfo, playerSkip } from '../messages/playerMusic.js'
+import { queue } from '../messages/queue.js'
 
 const userManager = new UserManager()
 
 export const messageCreate = async (client, message) => {
     try {
+        if (message.author.bot || message.channel.type === 'dm') return
+
         const id = message.author.id
         const username = message.author.username
         const nickname = message.member.nickname
-        const voiceChannel = message.member.voice.channel.id
+        const voiceChannel = message?.member?.voice?.channel?.id
 
         message.react('🤔')
-        if (message.author.bot || message.channel.type === 'dm') return
 
         //  BOT CHATGPT 3.5 BOT CHATGPT 3.5
 
@@ -36,9 +38,11 @@ export const messageCreate = async (client, message) => {
                 outputText = await iiBotMessage(message.content.slice(4), id, nickname) // Generation outputText
                 console.log('otvet')
             }
-            await voiceBot(outputText, url) // create mp3 file
+            if (message.content.slice(5, 7) === '-v') {
+                await voiceBot(outputText, url) // create mp3 file
 
-            await playerText(message, url) // playing mp3 file
+                await playerText(message, url) // playing mp3 file
+            }
 
             return message.reply(outputText)
         }
@@ -46,14 +50,33 @@ export const messageCreate = async (client, message) => {
         // BOT SET IMAGE BOT SET IMAGE BOT SET IMAGE
 
         if (message.content.startsWith(`${prefix}image`)) {
-            return await iiBotImage(message.content.slice(5))
+            // const botImage = await iiBotImage(message.content.slice(5))
+            // return message.reply(botImage)
         }
 
         // BOT MUSIC BOT MUSIC BOT MUSIC
 
         if (message.content.startsWith(`${prefix}play`)) {
-            return await playerMusic(voiceChannel, message.content.slice(5)) // playing link 'youTube'?
+            return await playerMusic(voiceChannel, message.content.slice(5))
         }
+
+        if (message.content.startsWith(`${prefix}skip`)) {
+            playerSkip(message)
+        }
+
+        if (message.content.startsWith(`${prefix}tracks`)) {
+            const tracksInfo = await playerInfo(message)
+            const embed = await queue(tracksInfo)
+            if (embed) {
+                message.reply({ ephemeral: true, embeds: embed })
+            }
+        }
+
+        //
+
+        //
+
+        // .
 
         if (message.member.user.username === 'Steeeasy') {
             const attachment = new MessagePayload('./bot/data/stass.jpeg')
@@ -89,38 +112,6 @@ export const messageCreate = async (client, message) => {
             message.reply('List has been deleted')
         }
 
-        if (message.content.startsWith(`${prefix}Ты бот`)) {
-            message.reply(`   ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠟⠛⠛⠛⠛⠛⠛⠛⡛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠛⠉⠁⠀⠀⠀⠀⠀⠀⠈⠒⠀⠀⠀⠈⠑⠂⠈⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠷⠤⣄⠈⠛⠦⣀⠀⠑⠂⠀⠀⠀⠀⠀⠐⠂⠀⠀⠀⠀⠀⠀⠙⠒⠤⣘⣯⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣿⡿⠓⠢⢤⣀⠀⠀⠙⢦⡀⠈⠓⢤⡀⠀⠀⠉⠐⠠⢀⠀⠀⠈⠐⠄⡀⠈⠢⡀⠀⠀⠹⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣿⡷⡶⠤⣄⡈⠳⣤⡀⠀⠙⠲⣄⡀⠈⠓⠤⣀⡀⠀⠀⠑⠂⠀⠀⠀⢀⡐⠀⣈⣁⣠⡀⡻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⡿⠉⠻⣷⣤⡙⢦⣤⣍⣓⣦⣰⣶⡽⣷⣶⡟⠛⠿⠿⠶⠟⠛⠛⠛⠛⠋⠉⠉⠋⠈⠉⠙⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⠃⠀⠀⠀⠉⠛⢦⣙⡄⠀⠉⠉⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠸⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⠏⠀⢀⡀⠀⣀⣀⠀⠈⠏⠀⠀⠀⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⢹⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⢹⡄⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠀⢻⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⡀⣦⣀⣤⣶⣒⣶⣤⣀⠀⠀⠀⠀⠀⠀⢿⠀⢀⣠⡶⠛⠉⠻⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⠙⠚⠛⣦⠤⡤⠬⡙⠓⠦⠀⠀⠀⠀⢸⡇⢿⡉⠀⠒⠢⡄⢹⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⠇⠀⠆⠀⣻⣛⣂⣤⠜⠀⠀⠀⠀⠀⠀⠘⣏⠳⣽⣤⡴⠦⡌⡄⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿
-            ⣿⣿⠏⠀⡌⠀⠀⠈⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡏⠳⡄⢸⡇⠀⢀⠇⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿
-            ⣿⡟⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣴⡋⠹⣗⡙⠻⡇⠀⠈⣰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⠁⠀⠀⠀⠀⠤⢄⠀⠀⠀⠀⠀⠀⠀⡜⢿⠀⠹⢦⡀⢨⡁⣇⢀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣦⣤⣤⣶⣤⣤⡨⠀⢰⠖⠒⢤⡀⡼⡇  ⠀⠀⠀⠙⣿⡏⠘                ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⡇⢠⡀⢨⡙⠦⢤⣸⠟⡆⢠⢻⠃⢷⠀⠀  ⠀⠀⠁⠈   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣷⣦⣵⣄⠉⡀⠀⠈⢿⠁⢴⡾⠀⠈⢧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣷⣿⣿⣿⣿⡟⠚............................⣠⡴⠶⠛⠛⠛⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⡟⠉⠁⠀⣿⠉⠄⢻⡀⠀⠀⠀⢸⣿⡇⠀⠀⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⣿⣼⠋⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⢯⠇⠀⠀⠀⣼⠀⠈⢸⣧⠀⠀⠀⠈⣿⠀⠀⠀⠀⣼⣿⠀⠀⠀⠀⠀⣀⣀⣀⣿⡏⠀⠀⠀⠀⣴⣆⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿
-            ⣿⣿⣿⡾⢀⠀⠀⢠⠏⠀⠀⢀⣿⡄⠀⠀⠀⠟⠀⠀⠀⢰⣏⣽⠀⠀⠀⠀⠀⣿⠀⠀⠸⡇⠀⠀⠀⠀⠻⣿⣀⣀⣀⣀⣼⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣄⣸⣤⣴⠋⠄⠀ ⠈⡻⣧⠀⠀⠀⠀⠀⠀⠀⣾⠁⢸⠀⠀⠀⠀⠀⠛⠛⠛⣷⣷⡀⠀⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿
-            ⣿⣿⡇⠙⠋⠈⣷⠀⠀⠀  ⠀⠁⢹⡄⠀⠀⠀⠀⠀⢸⠇⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣷⣄⡀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿
-            ⣿⣿⣿⡀            ⣬⣷⠀⠀⠀⠀⢀⡟⠀⠀⢸⠀⠀⠀⠀⠀⣴⣶⣶⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣄⣠⣄⣀⣀⣠⣿⣿⣿⣿⠀⠀⠀⠀⢸⡇⣀⣠⣼⠀⠀⠀⠀⠀⣿⣿⣿⣿⡇⠀⠀⠀⠀⣿⣷⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⣿⣿⠀⠀⠀⠀⠀⠛⠛⠛⢻⣷⠀⠀⠀⠀⢻⡿⠀⠀⠀⠀⢸⡟⠛⠛⠛⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡇⠀⠀⠀⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣤⣤⣤⣼⣿⣿⣿⣿⣦⣤⣤⣤⣤⣤⣤⣿⣿⣷⣦⣤⣤⣤⣤⣤⣶⣿⣿⣷⣤⣤⣤⣿
-            ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿`)
-        }
         if (message.content.startsWith(`${prefix}points`)) {
             if (message.member.user.username !== 'CyberSlug') return message.reply(`No! ${':cowboy:'}`)
             const [comm, id, amount] = message.content.split(' ')
@@ -131,5 +122,6 @@ export const messageCreate = async (client, message) => {
         }
     } catch (err) {
         console.log(err)
+        message.reply('ERROR')
     }
 }
