@@ -2,15 +2,10 @@ import { prefix } from '../config.js'
 import { roll } from '../utils/roll.js'
 
 export const rollFullName = async (message, userManager) => {
-    try {
-        const id = message.author.id
-        if (message.content.startsWith(`${prefix}roll_name`)) {
-            if (message.member.user.username === 'CyberSlug') {
-                const newName = await roll()
-                const fullName = `${newName[0]} ${newName[1]}`
-                message.reply(`Твое новое имя: ${fullName}, установи его сам`)
-                return
-            }
+    const id = message.author.id
+
+    if (message.content.startsWith(`${prefix}roll_name`)) {
+        try {
             const userPoints = await userManager.getPoints(id)
             if (userPoints === false) {
                 message.reply('Ошибка, пользователя не существует')
@@ -29,8 +24,12 @@ export const rollFullName = async (message, userManager) => {
                 )
             }
             return
+        } catch (err) {
+            console.log(err)
+            const newName = await roll()
+            const fullName = `${newName[0]} ${newName[1]}`
+            message.reply(`Твое новое имя: ${fullName}, установи его сам`)
+            return
         }
-    } catch (err) {
-        console.log(err)
     }
 }

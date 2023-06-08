@@ -4,16 +4,20 @@ import { BlackList } from '../src/mongo.js'
 import { roll } from './roll.js'
 export class UserManager {
     async create(member, id) {
-        const newName = await roll()
-        const user = new User({
-            id,
-            name: newName[0],
-            alias: newName[1],
-            points: 10,
-        })
-        await user.save()
-        const fullName = `${newName[0]} ${newName[1]}`
-        await member.setNickname(fullName)
+        try {
+            const newName = await roll()
+            const user = new User({
+                id,
+                name: newName[0],
+                alias: newName[1],
+                points: 10,
+            })
+            await user.save()
+            const fullName = `${newName[0]} ${newName[1]}`
+            await member.setNickname(fullName)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     async changePoints(id, amount) {

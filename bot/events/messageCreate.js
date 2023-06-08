@@ -17,8 +17,8 @@ const userManager = new UserManager()
 export const messageCreate = async (client, message) => {
     try {
         if (message.author.bot || message.channel.type === 'dm') return
-
         const id = message.author.id
+        const list = client.guilds.cache.get(message.guildId)
         const username = message.author.username
         const nickname = message.member.nickname
         const voiceChannel = message?.member?.voice?.channel?.id
@@ -91,29 +91,24 @@ export const messageCreate = async (client, message) => {
 
         rollFullName(message, userManager)
         if (message.content.startsWith(`${prefix}name_all`)) {
-            if (message.member.user.username !== 'CyberSlug' && message.member.user.username !== 'VITOVT')
-                return message.reply(`Эта команда не доступна `)
             // isWorking = true
             // setTimeout(() => (isWorking = false), 30000)
-            return nameAll(client, userManager)
+            return nameAll(client, userManager, message.guildId)
         }
         submit(message)
 
         if (message.content.startsWith(`${prefix}get_name_list`)) {
-            if (message.member.user.username !== 'CyberSlug') return message.reply(`No! ${':cowboy:'}`)
             const res = await userManager.getListNames()
             if (res === '') return message.reply('List error')
             message.reply(res)
         }
 
         if (message.content.startsWith(`${prefix}remove_name_list`)) {
-            if (message.member.user.username !== 'CyberSlug') return message.reply(`No! ${':cowboy:'}`)
             await userManager.removeListNames()
             message.reply('List has been deleted')
         }
 
         if (message.content.startsWith(`${prefix}points`)) {
-            if (message.member.user.username !== 'CyberSlug') return message.reply(`No! ${':cowboy:'}`)
             const [comm, id, amount] = message.content.split(' ')
             const user = await userManager.find(id)
             const fullname = await userManager.getFullName(user)

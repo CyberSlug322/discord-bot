@@ -15,7 +15,7 @@ export const iiBotMessage = async (message, id, username, clearContext = true) =
     const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: contextObject[id],
-        max_tokens: 1999,
+        max_tokens: 1899,
     })
     contextObject[id].push({ role: 'assistant', content: response?.data?.choices?.[0]?.message?.content })
     return `${username}, ${response?.data?.choices?.[0]?.message?.content}`
