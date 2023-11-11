@@ -32,7 +32,7 @@ export const messageCreate = async (client, message) => {
             let url = sourse()
 
             if (message.content.slice(5, 7) === '-c') {
-                outputText = await iiBotMessage(message.content.slice(7), id, nickname, false) // Generation outputText
+                outputText = await iiBotMessage(message.content.slice(7), id, nickname, false) // Generation outputText context
                 console.log('otvet')
             } else {
                 outputText = await iiBotMessage(message.content.slice(4), id, nickname) // Generation outputText
