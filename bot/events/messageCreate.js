@@ -61,7 +61,7 @@ export const messageCreate = async (client, message) => {
         }
 
         if (message.content.startsWith(`${prefix}skip`)) {
-            playerSkip(message)
+            await playerSkip(message)
         }
 
         if (message.content.startsWith(`${prefix}tracks`)) {

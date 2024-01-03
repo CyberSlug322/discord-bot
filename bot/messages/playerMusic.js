@@ -2,7 +2,7 @@ import { getPlayer } from '../index.js'
 
 export const playerMusic = async (channel, url) => {
     // !play ""
-    const player = getPlayer()
+    const player = await getPlayer()
 
     await player.play(channel, url)
 }
@@ -10,7 +10,7 @@ export const playerMusic = async (channel, url) => {
 export const playerInfo = async (message) => {
     //  !tracks
     try {
-        const player = getPlayer()
+        const player = await getPlayer()
         const queue = player.nodes.get(message.guild)
         const result = player.queues.cache.find((e) => e)?.tracks?.data ?? []
         result.unshift(queue.currentTrack.raw)
@@ -21,9 +21,9 @@ export const playerInfo = async (message) => {
     }
 }
 
-export const playerSkip = (message) => {
+export const playerSkip = async (message) => {
     // !skip
-    const player = getPlayer()
+    const player = await getPlayer()
     const queue = player?.nodes?.get(message.guild)
     queue?.node?.skip()
 }

@@ -22,7 +22,12 @@ const client = new Discord.Client({
 })
 
 const player = new Player(client)
-export const getPlayer = () => {
+let initialized = false;
+export const getPlayer = async () => {
+    if (!initialized) {
+        await player.extractors.loadDefault((ext) => ext !== 'YouTubeExtractor');
+        initialized = true
+    }
     return player
 }
 
