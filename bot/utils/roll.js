@@ -5,15 +5,11 @@ export async function roll() {
     const namesArr = addDependenciesToNames(namesObj)
 
     const firstRollPos = Math.floor(Math.random() * namesArr[namesArr.length - 1][2])
-
-    const firstRolledArr = namesArr.find((e) => firstRollPos < e[2])
-
+    const firstRolledArr = namesArr.find((e) => firstRollPos <= e[2])
     const firstName = getRandomName(firstRolledArr)
 
     const secondRollArraysPos = firstRolledArr[1]
-
     const secondRollPos = secondRollArraysPos[Math.floor(Math.random() * secondRollArraysPos.length)]
-
     const secondName = getRandomName(namesArr[secondRollPos])
 
     return [firstName, secondName]
