@@ -3,6 +3,8 @@ import { token, guildId } from './config.js'
 import { loadEvents } from './src/loader.js'
 import { deployCommands } from './src/deployCommands.js'
 import { Player, GuildQueue } from 'discord-player'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const client = new Discord.Client({
     intents: [
@@ -22,10 +24,10 @@ const client = new Discord.Client({
 })
 
 const player = new Player(client)
-let initialized = false;
+let initialized = false
 export const getPlayer = async () => {
     if (!initialized) {
-        await player.extractors.loadDefault((ext) => ext !== 'YouTubeExtractor');
+        await player.extractors.loadDefault() //(ext) => ext !== 'YouTubeExtractor'
         initialized = true
     }
     return player
