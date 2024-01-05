@@ -1,9 +1,8 @@
 import { NamesDB } from './namesDB.js'
-let namesObj = null
 export async function roll() {
-    if(namesObj) {
-        namesObj = await NamesDB.getAllNames()
-    }
+
+    const namesObj = await NamesDB.getAllNames()
+    
     const namesArr = addDependenciesToNames(namesObj)
 
     const firstRollPos = Math.floor(Math.random() * namesArr[namesArr.length - 1][2])
