@@ -21,6 +21,8 @@ const newNameSchema = new mongoose.Schema(
         neutral_adjectives: Array,
         she_names: Array,
         she_adjectives: Array,
+        no_name: Array,
+        solo_name: Array,
     },
     { versionKey: false }
 )
@@ -64,6 +66,8 @@ db.once('open', () => {
         neutral_adjectives: Names.neutral_adjectives,
         she_names: Names.she_names,
         she_adjectives: Names.she_adjectives,
+        no_name: Names.no_name,
+        solo_name: Names.solo_name
     })
     allNames.save()
 })
