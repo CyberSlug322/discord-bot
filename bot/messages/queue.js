@@ -17,6 +17,11 @@ export const queue = async (tracksArray) => {
                 return embed
             }
         })
+
+        if(res.length > 9) {
+            const lastEmbed = new EmbedBuilder().setColor(0x25d470).setTitle('More tracks...')
+            return [...res.slice(0,9), lastEmbed]
+        }
         return res
     }
 }

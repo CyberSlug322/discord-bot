@@ -68,23 +68,18 @@ export const messageCreate = async (client, message) => {
             const tracksInfo = await playerInfo(message)
             const embed = await queue(tracksInfo)
             if (embed) {
-                message.reply({ ephemeral: true, embeds: embed })
+               await message.reply({ ephemeral: true, embeds: embed })
             }
         }
 
-        //
-
-        //
-
-        // .
-
         if (message.member.user.username === 'Steeeasy') {
             const attachment = new MessagePayload('./bot/data/stass.jpeg')
-            message.reply({ files: [attachment] })
+            await message.reply({ files: [attachment] })
         }
+        
         if (message.member.user.username === 'Вася') {
             const attachment = new MessagePayload('./bot/data/mops.jpeg')
-            message.reply({ files: [attachment] })
+            await message.reply({ files: [attachment] })
         }
 
         if (!message.content.startsWith(prefix)) return
@@ -113,7 +108,7 @@ export const messageCreate = async (client, message) => {
             const user = await userManager.find(id)
             const fullname = await userManager.getFullName(user)
             userManager.changePoints(id, amount)
-            message.reply(`${fullname} got ${amount} points.`)
+            await message.reply(`${fullname} got ${amount} points.`)
         }
     } catch (err) {
         console.log(err)
