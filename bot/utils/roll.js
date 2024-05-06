@@ -27,13 +27,13 @@ function getRandomName(arr) {
 function addDependenciesToNames(obj) {
     const arr = []
     arr.push([obj.all_fit, [2], 0])
-    arr.push([obj.he_names, [0], 70])
-    arr.push([obj.he_adjectives, [0, 1], 137])
+    arr.push([obj.he_names, [2], 0])
+    arr.push([obj.he_adjectives, [0, 1], 90])
     arr.push([obj.neutral_names, [4], 0])
-    arr.push([obj.neutral_adjectives, [3], 180])
+    arr.push([obj.neutral_adjectives, [3], 160])
     arr.push([obj.she_names, [6], 0])
     arr.push([obj.she_adjectives, [5], 220])
     arr.push([obj.no_name, [8], 0])
-    arr.push([obj.solo_name, [7], 400])
+    arr.push([obj.solo_name, [7], 300])
     return arr
 }
