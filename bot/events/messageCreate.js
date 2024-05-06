@@ -54,8 +54,8 @@ export const messageCreate = async (client, message) => {
             // return message.reply(botImage)
         }
         if (message.content.startsWith(`${prefix}info`)) {
-            message.reply(`Возможно вы хотели узнать кто такой Клоун и Шут... \n  Шут - стиль жизни. 
-            Клоун - профессия.` )
+            message.reply(`Возможно вы хотели узнать кто такой Клоун и Шут... \n Клоун - профессия.
+            Шут - стиль жизни. ` )
         }
 
         // BOT MUSIC BOT MUSIC BOT MUSIC
