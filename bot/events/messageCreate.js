@@ -53,6 +53,10 @@ export const messageCreate = async (client, message) => {
             // const botImage = await iiBotImage(message.content.slice(5))
             // return message.reply(botImage)
         }
+        if (message.content.startsWith(`${prefix}info`)) {
+            message.reply(`Возможно вы хотели узнать кто такой Клоун и Шут... \n  Шут - стиль жизни. 
+            Клоун - профессия.` )
+        }
 
         // BOT MUSIC BOT MUSIC BOT MUSIC
 
