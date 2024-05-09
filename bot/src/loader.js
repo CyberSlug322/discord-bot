@@ -1,5 +1,3 @@
-import path from 'path'
-import fs from 'fs'
 import { events } from '../events/index.js'
 
 export const loadEvents = (client) => {

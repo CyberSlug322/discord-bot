@@ -18,11 +18,10 @@ export const messageCreate = async (client, message) => {
     try {
         if (message.author.bot || message.channel.type === 'dm') return
         const id = message.author.id
-        const list = client.guilds.cache.get(message.guildId)
+        const list = client
         const username = message.author.username
         const nickname = message.member.nickname
         const voiceChannel = message?.member?.voice?.channel?.id
-
         message.react('🤔')
 
         //  BOT CHATGPT 3.5 BOT CHATGPT 3.5
