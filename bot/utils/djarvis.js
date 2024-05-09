@@ -6,12 +6,13 @@ export const djarvis = async (client) => {
                 let id = n.id
                 console.log(id)
 
-                if(Date.now() - KDTime.id < 1000*60*60*8) {
+                if(Date.now() - KDTime[id] < 1000*60*60*8) {
                     return
                     
                 }
 
                 KDTime[id] = Date.now()
+
 
                 console.log('play', KDTime)
                  if (n.channelId) {
