@@ -16,9 +16,11 @@ export const djarvis = async (client) => {
 
                 console.log('play', KDTime)
                  if (n.channelId) {
-                    playerMusic(n.channelId, 'https://www.youtube.com/watch?v=LuuOpozKbvE&ab_channel=V%C3%A1clav')
+                    if(id == '972207964771479553') return
 
-                 }
+                 playerMusic(n.channelId, 'https://www.youtube.com/watch?v=LuuOpozKbvE&ab_channel=V%C3%A1clav')
+                 
+                }
             }) 
                
     }
