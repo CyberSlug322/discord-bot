@@ -3,7 +3,7 @@ import { token, guildId } from './config.js'
 import { loadEvents } from './src/loader.js'
 import { deployCommands } from './src/deployCommands.js'
 import { Player, GuildQueue } from 'discord-player'
-import { djarvis } from './utils/djarvis.js'
+// import { djarvis } from './utils/djarvis.js'
 import dotenv from 'dotenv'
 import { VoiceConnectionStatus } from '@discordjs/voice'
 dotenv.config()
@@ -35,7 +35,7 @@ export const getPlayer = async () => {
     return player
 }
 loadEvents(client)
-djarvis(client)
+// djarvis(client)
 deployCommands(client)
 client.login(token)
 // https://www.youtube.com/watch?v=LuuOpozKbvE&ab_channel=V%C3%A1clav
