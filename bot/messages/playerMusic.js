@@ -2,9 +2,12 @@ import { getPlayer } from '../index.js'
 
 export const playerMusic = async (channel, url) => {
     // !play ""
-    const player = await getPlayer()
-
-    await player.play(channel, url)
+    try {
+        const player = await getPlayer()
+        await player.play(channel, url)
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export const playerInfo = async (message) => {
