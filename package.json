@@ -24,7 +24,7 @@
         "@discordjs/builders": "^0.15.0",
         "@discordjs/rest": "^0.4.1",
         "@discordjs/voice": "^0.16.1",
-        "@distube/ytdl-core": "^4.13.3",
+        "@distube/ytdl-core": "^4.14.4",
         "aws-sdk": "^2.1345.0",
         "chalk": "^4.1.2",
         "discord-player": "^6.6.6",
