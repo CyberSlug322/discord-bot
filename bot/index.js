@@ -4,6 +4,7 @@ import { loadEvents } from './src/loader.js'
 import { deployCommands } from './src/deployCommands.js'
 import { Player, GuildQueue } from 'discord-player'
 import { DefaultExtractors } from '@discord-player/extractor'
+import { YoutubeiExtractor } from 'discord-player-youtubei'
 // import { djarvis } from './utils/djarvis.js'
 import dotenv from 'dotenv'
 import { VoiceConnectionStatus } from '@discordjs/voice'
@@ -30,7 +31,8 @@ const player = new Player(client)
 let initialized = false
 export const getPlayer = async () => {
     if (!initialized) {
-        await player.extractors.loadMulti(DefaultExtractors)
+        //await player.extractors.loadMulti(DefaultExtractors)
+        await player.extractors.register(YoutubeiExtractor, {})
         //await player.extractors.loadDefault() //(ext) => ext !== 'YouTubeExtractor'
         initialized = true
     }
